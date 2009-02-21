@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<ToggleButton
+		android:id="@+id/enabled"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dip"
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
+		android:textOn="Service Enabled"
+		android:textOff="Service Disabled"
+		android:checked="true"/>
+	<TextView
+		android:id="@+id/about"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dip"
+		android:layout_marginLeft="20dip"
+		android:layout_marginRight="20dip"
+		android:layout_below="@id/enabled"
+		android:text="The SMSMorse service runs even when the application is not and waits for incoming SMS messages. When one is received it will  and vibrate your device in the morse code of the message text."/>
+	<TextView
+		android:id="@+id/test_label"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dip"
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
+		android:layout_below="@id/about"
+		android:text="Test text:"/>
+	<EditText
+		android:id="@+id/test_text"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
+		android:background="@android:drawable/editbox_background"
+		android:layout_below="@id/test_label"/>
+	<Button
+		android:id="@+id/test"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/test_text"
+		android:layout_marginRight="10dip"
+		android:layout_alignParentRight="true"
+		android:text="Vibrate"/>
+</RelativeLayout>
