@@ -9,9 +9,66 @@
 		android:layout_marginTop="10dip"
 		android:layout_marginLeft="10dip"
 		android:layout_marginRight="10dip"
+		android:paddingTop="10dip"
+		android:paddingBottom="30dip"
+		android:textSize="20dip"
 		android:textOn="Service Enabled"
 		android:textOff="Service Disabled"
 		android:checked="true"/>
+	<TextView
+		android:id="@+id/length_text"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dip"
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
+		android:text="Dot Length: "
+		android:layout_below="@id/enabled"/>
+	<SeekBar
+		android:id="@+id/length"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
+		android:background="@android:drawable/editbox_background"
+		android:layout_below="@id/length_text"
+		android:max="200"
+		android:progress="50"/>
+	<TextView
+		android:id="@+id/from_text"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dip"
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
+		android:text="Include Sender:"
+		android:layout_below="@id/length"/>
+	<RadioGroup
+		android:id="@+id/from"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
+		android:layout_below="@id/from_text"
+		android:orientation="horizontal">
+		<RadioButton
+			android:id="@+id/from_none"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="15dip"
+			android:text="None"/>
+		<RadioButton
+			android:id="@+id/from_before"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="15dip"
+			android:text="Before"/>
+		<RadioButton
+			android:id="@+id/from_after"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="After"/>
+	</RadioGroup>
 	<TextView
 		android:id="@+id/about"
 		android:layout_width="fill_parent"
@@ -19,31 +76,27 @@
 		android:layout_marginTop="10dip"
 		android:layout_marginLeft="20dip"
 		android:layout_marginRight="20dip"
-		android:layout_below="@id/enabled"
-		android:text="The SMSMorse service runs even when the application is not and waits for incoming SMS messages. When one is received it will  and vibrate your device in the morse code of the message text."/>
-	<TextView
-		android:id="@+id/test_label"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="20dip"
-		android:layout_marginLeft="10dip"
-		android:layout_marginRight="10dip"
-		android:layout_below="@id/about"
-		android:text="Test text:"/>
-	<EditText
-		android:id="@+id/test_text"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="10dip"
-		android:layout_marginRight="10dip"
-		android:background="@android:drawable/editbox_background"
-		android:layout_below="@id/test_label"/>
+		android:layout_below="@id/from"
+		
+		android:text="SMSMorse waits for incoming SMS messages, converts them to morse code, and then vibrates the device in that morse code pattern."/>
 	<Button
 		android:id="@+id/test"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/test_text"
-		android:layout_marginRight="10dip"
+		android:layout_below="@id/about"
 		android:layout_alignParentRight="true"
+		android:layout_marginRight="10dip"
+		android:layout_marginTop="15dip"
 		android:text="Vibrate"/>
+	<EditText
+		android:id="@+id/test_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/about"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="10dip"
+		android:layout_marginTop="15dip"
+		android:layout_toLeftOf="@id/test"
+		android:background="@android:drawable/editbox_background"
+		android:hint="Test Message"/>
 </RelativeLayout>

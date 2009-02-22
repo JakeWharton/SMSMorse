@@ -16,13 +16,24 @@ import android.util.Log;
 public class SMSMorseService extends Service {
 	private static Vibrator vib;
 	
-	static boolean ENABLED = true;
+	final static int SHOW_NONE = 0;
+	final static int SHOW_BEFORE = 1;
+	final static int SHOW_AFTER = 2;
+	static int SHOW_FROM = SHOW_NONE;
 	
-	final static int DOT = 100;
-	final static int DASH = DOT * 3;
-	final static int GAP = DOT;
-	final static int LETTER_GAP = DOT * 3;
-	final static int WORD_GAP = DOT * 7;
+	static int DOT = 100;
+	static int DASH = DOT * 3;
+	static int GAP = DOT;
+	static int LETTER_GAP = DOT * 3;
+	static int WORD_GAP = DOT * 7;
+	
+	public static void updateDot(int length) {
+		DOT = length;
+		DASH = DOT * 3;
+		GAP = DOT;
+		LETTER_GAP = DOT * 3;
+		WORD_GAP = DOT * 7;
+	}
 	
 	final static String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,?'!/()&:;=+-_\"$@";
 	final static int[][] MORSE = {
@@ -134,14 +145,14 @@ public class SMSMorseService extends Service {
     			v += ' ';
     	}
     	vib.vibrate(longs, -1);
-    	Log.i("SMSMorse", "Vibrating Morse: " + v);
+    	Log.i("SMSMorseService", "Vibrating Morse: " + v);
     }
     
     public class SMSMorseReceiver extends BroadcastReceiver {
     	private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
     	
     	public void onReceive(Context context, Intent intent) {
-    		if (ENABLED && intent.getAction().equals(SMS_RECEIVED)) {
+    		if (intent.getAction().equals(SMS_RECEIVED)) {
     			Bundle bundle = intent.getExtras();
     			if (bundle != null) {
     				Object[] pdus = (Object[])bundle.get("pdus");
@@ -149,8 +160,13 @@ public class SMSMorseService extends Service {
     				for (int i = 0; i < pdus.length; i++)
     					messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
     				for (SmsMessage message : messages) {
-    					vibrateMessage(message.getMessageBody());
-    					Log.i("SMSMorse", "Vibrated: " + message.getMessageBody());
+    					String body = message.getMessageBody();
+    					if (SHOW_FROM == SHOW_BEFORE)
+    						body = message.getOriginatingAddress() + ' ' + body;
+    					else if (SHOW_FROM == SHOW_AFTER)
+    						body += ' ' + message.getDisplayOriginatingAddress();
+    					vibrateMessage(body);
+    					Log.i("SMSMorseService", "Vibrated: " + body);
     				}
     			}
     		}
