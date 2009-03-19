@@ -8,28 +8,131 @@
 package com.jakewharton.smsmorse;
 
 public final class R {
+    public static final class array {
+        public static final int preference_vibrate_parts_entries=0x7f050000;
+        public static final int preference_vibrate_parts_entry_values=0x7f050001;
+    }
     public static final class attr {
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int defaultValue=0x7f010002;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int max=0x7f010001;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int min=0x7f010000;
     }
     public static final class drawable {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int about=0x7f050008;
-        public static final int enabled=0x7f050000;
-        public static final int from=0x7f050004;
-        public static final int from_after=0x7f050007;
-        public static final int from_before=0x7f050006;
-        public static final int from_none=0x7f050005;
-        public static final int from_text=0x7f050003;
-        public static final int length=0x7f050002;
-        public static final int length_text=0x7f050001;
-        public static final int test=0x7f050009;
-        public static final int test_text=0x7f05000a;
+        public static final int icon=0x7f070000;
+        public static final int seekbar=0x7f070001;
+        public static final int value=0x7f070002;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
+        public static final int betterseekbar_dialog=0x7f030000;
     }
     public static final class string {
-        public static final int app_name=0x7f040000;
+        public static final int app_name=0x7f060000;
+        public static final int app_receiver=0x7f060001;
+        public static final int app_title=0x7f060002;
+        public static final int menu_restore_defaults=0x7f060003;
+        public static final int preference_dot_length=0x7f060007;
+        public static final int preference_dot_length_summary=0x7f060009;
+        public static final int preference_dot_length_title=0x7f060008;
+        public static final int preference_enabled=0x7f060004;
+        public static final int preference_enabled_summary=0x7f060006;
+        public static final int preference_enabled_title=0x7f060005;
+        public static final int preference_test=0x7f060011;
+        public static final int preference_test_summary=0x7f060013;
+        public static final int preference_test_title=0x7f060012;
+        public static final int preference_vibrate_counts=0x7f06000a;
+        public static final int preference_vibrate_counts_summary=0x7f06000c;
+        public static final int preference_vibrate_counts_title=0x7f06000b;
+        public static final int preference_vibrate_parts=0x7f06000d;
+        public static final int preference_vibrate_parts_dialog_title=0x7f060010;
+        public static final int preference_vibrate_parts_summary=0x7f06000f;
+        public static final int preference_vibrate_parts_title=0x7f06000e;
     }
+    public static final class xml {
+        public static final int preferences=0x7f040000;
+    }
+    public static final class styleable {
+        /** Attributes that can be used with a BetterSeekBarPreference.
+           <p>Includes the following attributes:</p>
+           <table border="2" width="85%" align="center" frame="hsides" rules="all" cellpadding="5">
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute<th>Summary</tr>
+           <tr><th><code>{@link #BetterSeekBarPreference_defaultValue com.jakewharton.smsmorse:defaultValue}</code><td></tr>
+           <tr><th><code>{@link #BetterSeekBarPreference_max com.jakewharton.smsmorse:max}</code><td></tr>
+           <tr><th><code>{@link #BetterSeekBarPreference_min com.jakewharton.smsmorse:min}</code><td></tr>
+           </table>
+           @see #BetterSeekBarPreference_defaultValue
+           @see #BetterSeekBarPreference_max
+           @see #BetterSeekBarPreference_min
+         */
+        public static final int[] BetterSeekBarPreference = {
+            0x7f010000, 0x7f010001, 0x7f010002
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.jakewharton.smsmorse.R.attr#defaultValue}
+          attribute's value can be found in the {@link #BetterSeekBarPreference} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:defaultValue
+        */
+        public static final int BetterSeekBarPreference_defaultValue = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.jakewharton.smsmorse.R.attr#max}
+          attribute's value can be found in the {@link #BetterSeekBarPreference} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:max
+        */
+        public static final int BetterSeekBarPreference_max = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.jakewharton.smsmorse.R.attr#min}
+          attribute's value can be found in the {@link #BetterSeekBarPreference} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:min
+        */
+        public static final int BetterSeekBarPreference_min = 0;
+    };
 }

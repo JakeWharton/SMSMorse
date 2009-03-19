@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SMSMorse</string>
+	<string name="app_name">SMSMorse</string>
+	<string name="app_receiver">SMSMorseReceiver</string>
+	<string name="app_title">SMSMorse Settings</string>
+	
+	<string name="menu_restore_defaults">Restore Defaults</string>
+	
+	<string name="preference_enabled">enabled</string>
+	<string name="preference_enabled_title">Service Enabled</string>
+	<string name="preference_enabled_summary"></string>
+	<string name="preference_dot_length">dot_length</string>
+	<string name="preference_dot_length_title">Dot Length</string>
+	<string name="preference_dot_length_summary">Length (ms) of the Morse code dot.</string>
+	<string name="preference_vibrate_counts">vibrate_counts</string>
+	<string name="preference_vibrate_counts_title">Vibrate Number Counts</string>
+	<string name="preference_vibrate_counts_summary">Use counts to vibrate the sender number rather than Morse code representation.</string>
+	<string name="preference_vibrate_parts">vibrate_parts</string>
+	<string name="preference_vibrate_parts_title">Vibrate Parts</string>
+	<string name="preference_vibrate_parts_summary">Currently:</string>
+	<string name="preference_vibrate_parts_dialog_title">Choose message part(s)</string>
+	<string name="preference_test">test</string>
+	<string name="preference_test_title">Test Vibrate</string>
+	<string name="preference_test_summary">Enter test message to test configuration.</string>
 </resources>

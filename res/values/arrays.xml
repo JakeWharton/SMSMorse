@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="preference_vibrate_parts_entries">
+		<item>Message Only</item>
+		<item>Message + Sender</item>
+		<item>Sender + Message</item>
+		<item>Sender Only</item>
+	</string-array>
+	<string-array name="preference_vibrate_parts_entry_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+</resources>
