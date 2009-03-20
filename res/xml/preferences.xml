@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="@string/app_title">
+	<PreferenceCategory android:title="@string/preference_header_general">
 		<CheckBoxPreference
 			android:key="@string/preference_enabled"
 			android:title="@string/preference_enabled_title"
@@ -31,5 +31,12 @@
 			android:title="@string/preference_test_title"
 			android:summary="@string/preference_test_summary"
 			android:singleLine="true"/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/preference_header_input">
+		<CheckBoxPreference
+			android:key="@string/preference_input_enabled"
+			android:title="@string/preference_input_enabled_title"
+			android:summary="@string/preference_input_enabled_summary"
+			android:defaultValue="true"/>
 	</PreferenceCategory>
 </PreferenceScreen>

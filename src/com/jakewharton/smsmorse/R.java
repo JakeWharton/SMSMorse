@@ -42,34 +42,58 @@ containing a value of this type.
         public static final int icon=0x7f020000;
     }
     public static final class id {
+        public static final int app_about=0x7f070004;
+        public static final int app_by=0x7f070003;
+        public static final int app_name=0x7f070001;
+        public static final int app_version=0x7f070002;
         public static final int icon=0x7f070000;
-        public static final int seekbar=0x7f070001;
-        public static final int value=0x7f070002;
+        public static final int seekbar=0x7f070005;
+        public static final int value=0x7f070006;
     }
     public static final class layout {
-        public static final int betterseekbar_dialog=0x7f030000;
+        public static final int about=0x7f030000;
+        public static final int betterseekbar_dialog=0x7f030001;
     }
     public static final class string {
+        public static final int app_about=0x7f060004;
+        public static final int app_about_name=0x7f060001;
+        public static final int app_by=0x7f060003;
         public static final int app_name=0x7f060000;
-        public static final int app_receiver=0x7f060001;
-        public static final int app_title=0x7f060002;
-        public static final int menu_restore_defaults=0x7f060003;
-        public static final int preference_dot_length=0x7f060007;
-        public static final int preference_dot_length_summary=0x7f060009;
-        public static final int preference_dot_length_title=0x7f060008;
-        public static final int preference_enabled=0x7f060004;
-        public static final int preference_enabled_summary=0x7f060006;
-        public static final int preference_enabled_title=0x7f060005;
-        public static final int preference_test=0x7f060011;
-        public static final int preference_test_summary=0x7f060013;
-        public static final int preference_test_title=0x7f060012;
-        public static final int preference_vibrate_counts=0x7f06000a;
-        public static final int preference_vibrate_counts_summary=0x7f06000c;
-        public static final int preference_vibrate_counts_title=0x7f06000b;
-        public static final int preference_vibrate_parts=0x7f06000d;
-        public static final int preference_vibrate_parts_dialog_title=0x7f060010;
-        public static final int preference_vibrate_parts_summary=0x7f06000f;
-        public static final int preference_vibrate_parts_title=0x7f06000e;
+        public static final int app_receiver=0x7f060005;
+        public static final int app_version=0x7f060002;
+        public static final int menu_about=0x7f060007;
+        /**  Menu Items 
+         */
+        public static final int menu_restore_defaults=0x7f060006;
+        public static final int preference_dot_length=0x7f06000d;
+        public static final int preference_dot_length_summary=0x7f06000f;
+        public static final int preference_dot_length_title=0x7f06000e;
+        /**  General Preferences 
+         */
+        public static final int preference_enabled=0x7f06000a;
+        public static final int preference_enabled_summary=0x7f06000c;
+        public static final int preference_enabled_title=0x7f06000b;
+        public static final int preference_error_allowed=0x7f06001e;
+        public static final int preference_error_char=0x7f06001d;
+        /**  Preference Headers 
+         */
+        public static final int preference_header_general=0x7f060008;
+        public static final int preference_header_input=0x7f060009;
+        /**  Input Preferences 
+         */
+        public static final int preference_input_enabled=0x7f06001a;
+        public static final int preference_input_enabled_summary=0x7f06001c;
+        public static final int preference_input_enabled_title=0x7f06001b;
+        public static final int preference_test=0x7f060017;
+        public static final int preference_test_summary=0x7f060019;
+        public static final int preference_test_title=0x7f060018;
+        public static final int preference_vibrate_counts=0x7f060010;
+        public static final int preference_vibrate_counts_summary=0x7f060012;
+        public static final int preference_vibrate_counts_title=0x7f060011;
+        public static final int preference_vibrate_parts=0x7f060013;
+        public static final int preference_vibrate_parts_dialog_title=0x7f060016;
+        public static final int preference_vibrate_parts_summary=0x7f060015;
+        public static final int preference_vibrate_parts_title=0x7f060014;
     }
     public static final class xml {
         public static final int preferences=0x7f040000;

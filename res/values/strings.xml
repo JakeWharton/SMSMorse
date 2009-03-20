@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">SMSMorse</string>
+	<string name="app_about_name">About SMSMorse</string>
+	<string name="app_version">v1.0.0</string>
+	<string name="app_by">by Jake Wharton</string>
+	<string name="app_about"><a href="http://jakewharton.com">View Website</a>\n\n<a href="http://twitter.com/JakeWharton">Follow on Twitter</a>\n\n<a href="http://cyrket.com/search?q=com.jakewharton">View Other Android Applications</a></string>
 	<string name="app_receiver">SMSMorseReceiver</string>
-	<string name="app_title">SMSMorse Settings</string>
 	
+	<!-- Menu Items -->
 	<string name="menu_restore_defaults">Restore Defaults</string>
+	<string name="menu_about">About</string>
 	
+	<!-- Preference Headers -->
+	<string name="preference_header_general">SMSMorse General Settings</string>
+	<string name="preference_header_input">SMSMorse Input Settings</string>
+	
+	<!-- General Preferences -->
 	<string name="preference_enabled">enabled</string>
 	<string name="preference_enabled_title">Service Enabled</string>
-	<string name="preference_enabled_summary"></string>
+	<string name="preference_enabled_summary">Enable Morse code vibration for incoming SMS messages.</string>
 	<string name="preference_dot_length">dot_length</string>
 	<string name="preference_dot_length_title">Dot Length</string>
 	<string name="preference_dot_length_summary">Length (ms) of the Morse code dot.</string>
@@ -22,4 +32,11 @@
 	<string name="preference_test">test</string>
 	<string name="preference_test_title">Test Vibrate</string>
 	<string name="preference_test_summary">Enter test message to test configuration.</string>
+	
+	<!-- Input Preferences -->
+	<string name="preference_input_enabled">input_enabled</string>
+	<string name="preference_input_enabled_title">Input Enabled</string>
+	<string name="preference_input_enabled_summary">Enable ability to reply to SMS message by tapping Morse code.</string>
+	<string name="preference_error_char">error_char</string>
+	<string name="preference_error_allowed">error_allowed</string>
 </resources>
