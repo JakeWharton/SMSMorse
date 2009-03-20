@@ -32,19 +32,23 @@ public class SMSMorseReceiver extends BroadcastReceiver {
 	private static final int VIBRATE_CONTENT_SENDER         = 3;
 	
 	//Preference defaults
-	private static final int     DEFAULT_DOT_LENGTH     = 150;
-	private static final String  DEFAULT_VIBRATE_PARTS  = Integer.toString(VIBRATE_CONTENT_MESSAGE);
-	private static final boolean DEFAULT_ENABLED        = true;
-	private static final boolean DEFAULT_VIBRATE_COUNTS = false;
-	private static final long    DEFAULT_INITIAL_PAUSE  = 500L;
-	private static final String  DEFAULT_ERROR_CHAR     = "_";
-	private static final float   DEFAULT_ERROR_ALLOWED  = 0.2F;
+	private static final boolean DEFAULT_ENABLED         = true;
+	private static final String  DEFAULT_VIBRATE_PARTS   = Integer.toString(VIBRATE_CONTENT_MESSAGE);
+	private static final boolean DEFAULT_VIBRATE_COUNTS  = false;
+	private static final int     DEFAULT_DOT_LENGTH      = 150;
+	private static final boolean DEFAULT_SCREEN_OFF_ONLY = true;
+	private static final boolean DEFAULT_VIBRATE_NORMAL  = true;
+	private static final boolean DEFAULT_VIBRATE_VIBRATE = true;
+	private static final boolean DEFAULT_VIBRATE_SILENT  = false;
+	private static final long    DEFAULT_INITIAL_PAUSE   = 500L;
+	private static final String  DEFAULT_ERROR_CHAR      = "_";
+	private static final float   DEFAULT_ERROR_ALLOWED   = 0.2F;
 	
 	//Morse code
-	private final static int  DOTS_IN_DASH       = 3;
-	private final static int  DOTS_IN_GAP        = 1;
-	private final static int  DOTS_IN_LETTER_GAP = 3;
-	private final static int  DOTS_IN_WORD_GAP   = 7;
+	private final static int DOTS_IN_DASH       = 3;
+	private final static int DOTS_IN_GAP        = 1;
+	private final static int DOTS_IN_LETTER_GAP = 3;
+	private final static int DOTS_IN_WORD_GAP   = 7;
 	
 	//Character sets
 	private final static String      CHARSET_MORSE  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,?'!/()&:;=+-_\"$@";
@@ -151,34 +155,40 @@ public class SMSMorseReceiver extends BroadcastReceiver {
 		else if (action.equals(PARSE_MORSE)) {
 			Log.i(TAG, "Parsed to: " + parseMorse(extras.getLongArray(PARSE_MORSE_KEY)));
 		}
-		else if (action.equals(SMS_RECEIVED) && (extras != null)
-				&& settings.getBoolean(resources.getString(R.string.preference_enabled), DEFAULT_ENABLED)
-				&& (((AudioManager)context.getSystemService(Context.AUDIO_SERVICE)).getRingerMode() != AudioManager.RINGER_MODE_SILENT)
-				&& ((KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode()) {
-			//IF intent action is an SMS received
-			// and service is enabled in application settings
-			// and phone is not in completely silent mode
-			// and the key guard is enabled
+		else {
+			final boolean smsReceived   = action.equals(SMS_RECEIVED) && (extras != null);
+			final boolean enabled       = settings.getBoolean(resources.getString(R.string.preference_enabled), DEFAULT_ENABLED);
+			final boolean keygaurdOn    = ((KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode();
+			final boolean screenOffOnly = settings.getBoolean(resources.getString(R.string.preference_screen_off_only), DEFAULT_SCREEN_OFF_ONLY);
 			
-			//Create SMSMessages from PDUs in the Bundle
-			final Object[] pdus = (Object[])extras.get("pdus");
-			final SmsMessage[] messages = new SmsMessage[pdus.length];
-			for (int i = 0; i < pdus.length; i++)
-				messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
+			final int audioMode = ((AudioManager)context.getSystemService(Context.AUDIO_SERVICE)).getRingerMode();
+			final boolean activeAudioMode = (
+				((audioMode == AudioManager.RINGER_MODE_NORMAL) && settings.getBoolean(resources.getString(R.string.preference_vibrate_normal), DEFAULT_VIBRATE_NORMAL)) ||
+				((audioMode == AudioManager.RINGER_MODE_VIBRATE) && settings.getBoolean(resources.getString(R.string.preference_vibrate_vibrate), DEFAULT_VIBRATE_VIBRATE)) ||
+				((audioMode == AudioManager.RINGER_MODE_SILENT) && settings.getBoolean(resources.getString(R.string.preference_vibrate_silent), DEFAULT_VIBRATE_SILENT))
+			);
 			
-			//Assemble 
-			final ArrayList<Long> vibrations = new ArrayList<Long>();
-			final int vibrateParts = Integer.parseInt(settings.getString(resources.getString(R.string.preference_vibrate_parts), DEFAULT_VIBRATE_PARTS));
-			for (SmsMessage message : messages) {
-				if ((vibrateParts == VIBRATE_CONTENT_SENDER) || (vibrateParts == VIBRATE_CONTENT_SENDER_MESSAGE))
-					vibrations.addAll(convertToVibrations(message.getOriginatingAddress(), true));
-				if (vibrateParts != VIBRATE_CONTENT_SENDER)
-					vibrations.addAll(convertToVibrations(message.getMessageBody()));
-				if (vibrateParts == VIBRATE_CONTENT_MESSAGE_SENDER)
-					vibrations.addAll(convertToVibrations(message.getOriginatingAddress(), true));
+			if (smsReceived && enabled && activeAudioMode && (keygaurdOn || !screenOffOnly)) {
+				//Create SMSMessages from PDUs in the Bundle
+				final Object[] pdus = (Object[])extras.get("pdus");
+				final SmsMessage[] messages = new SmsMessage[pdus.length];
+				for (int i = 0; i < pdus.length; i++)
+					messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
+				
+				//Assemble 
+				final ArrayList<Long> vibrations = new ArrayList<Long>();
+				final int vibrateParts = Integer.parseInt(settings.getString(resources.getString(R.string.preference_vibrate_parts), DEFAULT_VIBRATE_PARTS));
+				for (SmsMessage message : messages) {
+					if ((vibrateParts == VIBRATE_CONTENT_SENDER) || (vibrateParts == VIBRATE_CONTENT_SENDER_MESSAGE))
+						vibrations.addAll(convertToVibrations(message.getOriginatingAddress(), true));
+					if (vibrateParts != VIBRATE_CONTENT_SENDER)
+						vibrations.addAll(convertToVibrations(message.getMessageBody()));
+					if (vibrateParts == VIBRATE_CONTENT_MESSAGE_SENDER)
+						vibrations.addAll(convertToVibrations(message.getOriginatingAddress(), true));
+				}
+				
+				vibrateMorse(vibrations);
 			}
-			
-			vibrateMorse(vibrations);
 		}
 	}
 	private void vibrateMorse(final ArrayList<Long> vibrationLongs) {

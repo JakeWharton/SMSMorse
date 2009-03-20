@@ -2,7 +2,7 @@
 <resources>
 	<string name="app_name">SMSMorse</string>
 	<string name="app_about_name">About SMSMorse</string>
-	<string name="app_version">v1.0.0</string>
+	<string name="app_version">v1.1.0</string>
 	<string name="app_by">by Jake Wharton</string>
 	<string name="app_about"><a href="http://jakewharton.com">View Website</a>\n\n<a href="http://twitter.com/JakeWharton">Follow on Twitter</a>\n\n<a href="http://cyrket.com/search?q=com.jakewharton">View Other Android Applications</a></string>
 	<string name="app_receiver">SMSMorseReceiver</string>
@@ -13,6 +13,7 @@
 	
 	<!-- Preference Headers -->
 	<string name="preference_header_general">SMSMorse General Settings</string>
+	<string name="preference_header_rules">SMSMorse Rule Settings</string>
 	<string name="preference_header_input">SMSMorse Input Settings</string>
 	
 	<!-- General Preferences -->
@@ -32,6 +33,20 @@
 	<string name="preference_test">test</string>
 	<string name="preference_test_title">Test Vibrate</string>
 	<string name="preference_test_summary">Enter test message to test configuration.</string>
+	
+	<!-- Rules Preferences -->
+	<string name="preference_screen_off_only">vibrate_when_screen_off_only</string>
+	<string name="preference_screen_off_only_title">Screen Off Only</string>
+	<string name="preference_screen_off_only_summary">Only vibrate when the screen is off or is locked.</string>
+	<string name="preference_vibrate_normal">vibrate_when_on_normal</string>
+	<string name="preference_vibrate_normal_title">Active On Normal</string>
+	<string name="preference_vibrate_normal_summary">Vibrate Morse code when the device ringer is on normal.</string>
+	<string name="preference_vibrate_vibrate">vibrate_when_on_vibrate</string>
+	<string name="preference_vibrate_vibrate_title">Active On Vibrate</string>
+	<string name="preference_vibrate_vibrate_summary">Vibrate Morse code when the device ringer is on vibrate.</string>
+	<string name="preference_vibrate_silent">vibrate_when_on_silent</string>
+	<string name="preference_vibrate_silent_title">Active On Silent</string>
+	<string name="preference_vibrate_silent_summary">Vibrate Morse code when the device ringer is on silent.</string>
 	
 	<!-- Input Preferences -->
 	<string name="preference_input_enabled">input_enabled</string>

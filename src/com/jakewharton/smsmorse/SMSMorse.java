@@ -1,7 +1,5 @@
 package com.jakewharton.smsmorse;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -21,10 +19,14 @@ public class SMSMorse extends PreferenceActivity {
 	
 	private CheckBoxPreference      mCheckBoxEnabled;
 	private ListPreference          mVibratePart;
-	private CheckBoxPreference      mVibrateNumberCounts;
+	private CheckBoxPreference      mVibrateCounts;
 	private BetterSeekBarPreference mDotLength;
 	private EditTextPreference      mTestText;
-	private CheckBoxPreference      mCheckBoxInputEnabled;
+	private CheckBoxPreference      mScreenOffOnly;
+	private CheckBoxPreference      mActiveNormal;
+	private CheckBoxPreference      mActiveVibrate;
+	private CheckBoxPreference      mActiveSilent;
+	//private CheckBoxPreference      mCheckBoxInputEnabled;
 	
 	private OnPreferenceChangeListener mVibratePartListener = new OnPreferenceChangeListener() {
 		public boolean onPreferenceChange(Preference preference, Object newValue) { 
@@ -46,26 +48,30 @@ public class SMSMorse extends PreferenceActivity {
 			boolean state = (Boolean)arg1;
 			
 			mVibratePart.setEnabled(state);
-			mTestText.setEnabled(state);
-			mVibrateNumberCounts.setEnabled(state);
+			mVibrateCounts.setEnabled(state);
 			mDotLength.setEnabled(state);
-			mCheckBoxInputEnabled.setEnabled(state);
+			mTestText.setEnabled(state);
+			mScreenOffOnly.setEnabled(state);
+			mActiveNormal.setEnabled(state);
+			mActiveVibrate.setEnabled(state);
+			mActiveSilent.setEnabled(state);
+			//mCheckBoxInputEnabled.setEnabled(state);
 			
-			if (!state || mCheckBoxEnabled.isChecked())
-				mInputEnabledListener.onPreferenceChange(arg0, arg1);
+			//if (!state || mCheckBoxEnabled.isChecked())
+			//	mInputEnabledListener.onPreferenceChange(arg0, arg1);
 			
 			return true;
 		}
 	};
-	private OnPreferenceChangeListener mInputEnabledListener = new OnPreferenceChangeListener() {
+	/*private OnPreferenceChangeListener mInputEnabledListener = new OnPreferenceChangeListener() {
 		public boolean onPreferenceChange(Preference arg0, Object arg1) {
 			boolean state = (Boolean)arg1;
 			
-			//
+			//TODO: add input preferences here
 			
 			return true;
 		}
-	};	
+	};*/
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -76,22 +82,24 @@ public class SMSMorse extends PreferenceActivity {
 		final PreferenceScreen screen = getPreferenceScreen();
 		
 		mCheckBoxEnabled = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_enabled));
-		mCheckBoxEnabled.setOnPreferenceChangeListener(mEnabledListener);
+		mVibratePart     = (ListPreference)screen.findPreference(getString(R.string.preference_vibrate_parts));
+		mTestText        = (EditTextPreference)screen.findPreference(getString(R.string.preference_test));
+		mVibrateCounts   = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_vibrate_counts));
+		mDotLength       = (BetterSeekBarPreference)screen.findPreference(getString(R.string.preference_dot_length));
 		
-		mVibratePart = (ListPreference)screen.findPreference(getString(R.string.preference_vibrate_parts));
+		mCheckBoxEnabled.setOnPreferenceChangeListener(mEnabledListener);
 		mVibratePart.setOnPreferenceChangeListener(mVibratePartListener);
 		//Trigger summary update
 		mVibratePartListener.onPreferenceChange(mVibratePart, mVibratePart.getValue());
-		
-		mTestText = (EditTextPreference)screen.findPreference(getString(R.string.preference_test));
 		mTestText.setOnPreferenceChangeListener(mTestTextListener);
 		
-		mVibrateNumberCounts = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_vibrate_counts));
+		mScreenOffOnly = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_screen_off_only));
+		mActiveNormal  = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_vibrate_normal));
+		mActiveVibrate = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_vibrate_vibrate));
+		mActiveSilent  = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_vibrate_silent));
 		
-		mDotLength = (BetterSeekBarPreference)screen.findPreference(getString(R.string.preference_dot_length));
-
-		mCheckBoxInputEnabled = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_input_enabled));
-		mCheckBoxInputEnabled.setOnPreferenceChangeListener(mInputEnabledListener);
+		//mCheckBoxInputEnabled = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_input_enabled));
+		//mCheckBoxInputEnabled.setOnPreferenceChangeListener(mInputEnabledListener);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,21 +113,15 @@ public class SMSMorse extends PreferenceActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case MENU_RESTORE_DEFAULTS:
-				restoreDefaultPreferences();
+				PreferenceManager.getDefaultSharedPreferences(this).edit().clear().commit();
+				setPreferenceScreen(null);
+				loadPreferences();
 				return true;
+				
 			case MENU_ABOUT:
-				showAbout();
+				startActivity(new Intent(this, About.class));
 				return true;
 		}
 		return false;
-	}
-	private void restoreDefaultPreferences() {
-		PreferenceManager.getDefaultSharedPreferences(this).edit().clear().commit();
-		setPreferenceScreen(null);
-		loadPreferences();
-	}
-	private void showAbout() {
-		Intent about = new Intent(this, About.class);
-		startActivity(about);
 	}
 }

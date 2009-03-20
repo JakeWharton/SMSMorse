@@ -32,11 +32,33 @@
 			android:summary="@string/preference_test_summary"
 			android:singleLine="true"/>
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/preference_header_input">
+	<PreferenceCategory android:title="@string/preference_header_rules">
+		<CheckBoxPreference
+			android:key="@string/preference_screen_off_only"
+			android:title="@string/preference_screen_off_only_title"
+			android:summary="@string/preference_screen_off_only_summary"
+			android:defaultValue="true"/>
+		<CheckBoxPreference
+			android:key="@string/preference_vibrate_normal"
+			android:title="@string/preference_vibrate_normal_title"
+			android:summary="@string/preference_vibrate_normal_summary"
+			android:defaultValue="true"/>
+		<CheckBoxPreference
+			android:key="@string/preference_vibrate_vibrate"
+			android:title="@string/preference_vibrate_vibrate_title"
+			android:summary="@string/preference_vibrate_vibrate_summary"
+			android:defaultValue="true"/>
+		<CheckBoxPreference
+			android:key="@string/preference_vibrate_silent"
+			android:title="@string/preference_vibrate_silent_title"
+			android:summary="@string/preference_vibrate_silent_summary"
+			android:defaultValue="false"/>
+	</PreferenceCategory>
+	<!--<PreferenceCategory android:title="@string/preference_header_input">
 		<CheckBoxPreference
 			android:key="@string/preference_input_enabled"
 			android:title="@string/preference_input_enabled_title"
 			android:summary="@string/preference_input_enabled_summary"
 			android:defaultValue="true"/>
-	</PreferenceCategory>
+	</PreferenceCategory>-->
 </PreferenceScreen>
