@@ -1,6 +1,8 @@
-package com.jakewharton.smsmorse;
+package com.jakewharton.smsmorse.transaction;
 
 import java.util.ArrayList;
+
+import com.jakewharton.smsmorse.R;
 
 import android.app.KeyguardManager;
 import android.content.BroadcastReceiver;
@@ -15,8 +17,8 @@ import android.preference.PreferenceManager;
 import android.telephony.gsm.SmsMessage;
 import android.util.Log;
 
-public class SMSMorseReceiver extends BroadcastReceiver {
-	private static final String TAG = "SMSMorseReceiver";
+public class EventReceiver extends BroadcastReceiver {
+	private static final String TAG = "EventReceiver";
 	
 	//Intents
 	private static final String SMS_RECEIVED         = "android.provider.Telephony.SMS_RECEIVED";
@@ -155,8 +157,8 @@ public class SMSMorseReceiver extends BroadcastReceiver {
 		else if (action.equals(PARSE_MORSE)) {
 			Log.i(TAG, "Parsed to: " + parseMorse(extras.getLongArray(PARSE_MORSE_KEY)));
 		}
-		else {
-			final boolean smsReceived   = action.equals(SMS_RECEIVED) && (extras != null);
+		else if (action.equals(SMS_RECEIVED)) {
+			final boolean smsValid      = extras != null;
 			final boolean enabled       = settings.getBoolean(resources.getString(R.string.preference_enabled), DEFAULT_ENABLED);
 			final boolean keygaurdOn    = ((KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode();
 			final boolean screenOffOnly = settings.getBoolean(resources.getString(R.string.preference_screen_off_only), DEFAULT_SCREEN_OFF_ONLY);
@@ -168,7 +170,7 @@ public class SMSMorseReceiver extends BroadcastReceiver {
 				((audioMode == AudioManager.RINGER_MODE_SILENT) && settings.getBoolean(resources.getString(R.string.preference_vibrate_silent), DEFAULT_VIBRATE_SILENT))
 			);
 			
-			if (smsReceived && enabled && activeAudioMode && (keygaurdOn || !screenOffOnly)) {
+			if (smsValid && enabled && activeAudioMode && (keygaurdOn || !screenOffOnly)) {
 				//Create SMSMessages from PDUs in the Bundle
 				final Object[] pdus = (Object[])extras.get("pdus");
 				final SmsMessage[] messages = new SmsMessage[pdus.length];

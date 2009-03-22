@@ -1,4 +1,6 @@
-package com.jakewharton.smsmorse;
+package com.jakewharton.smsmorse.ui;
+
+import com.jakewharton.smsmorse.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;

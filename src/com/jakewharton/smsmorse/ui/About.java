@@ -1,4 +1,6 @@
-package com.jakewharton.smsmorse;
+package com.jakewharton.smsmorse.ui;
+
+import com.jakewharton.smsmorse.R;
 
 import android.app.Activity;
 import android.os.Bundle;

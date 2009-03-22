@@ -1,4 +1,7 @@
-package com.jakewharton.smsmorse;
+package com.jakewharton.smsmorse.ui;
+
+import com.jakewharton.smsmorse.R;
+import com.jakewharton.smsmorse.transaction.EventReceiver;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +16,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class SMSMorse extends PreferenceActivity {
+public class Preferences extends PreferenceActivity {
 	private static final int MENU_RESTORE_DEFAULTS = 0;
 	private static final int MENU_ABOUT            = 1;
 	
@@ -36,9 +39,9 @@ public class SMSMorse extends PreferenceActivity {
 	};
 	private OnPreferenceChangeListener mTestTextListener = new OnPreferenceChangeListener() {
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
-			Intent intent = new Intent(SMSMorse.this, SMSMorseReceiver.class);
-			intent.setAction(SMSMorseReceiver.VIBRATE_IN_MORSE);
-			intent.putExtra(SMSMorseReceiver.VIBRATE_IN_MORSE_KEY, (String)newValue);
+			Intent intent = new Intent(Preferences.this, EventReceiver.class);
+			intent.setAction(EventReceiver.VIBRATE_IN_MORSE);
+			intent.putExtra(EventReceiver.VIBRATE_IN_MORSE_KEY, (String)newValue);
 			sendBroadcast(intent);
 			return true;
 		}

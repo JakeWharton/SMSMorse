@@ -11,16 +11,16 @@
     	android:icon="@drawable/icon"
     	android:label="@string/app_name">
         
-        <activity android:name=".SMSMorse" android:label="@string/app_name">
+        <activity android:name=".ui.Preferences" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
         </activity>
         
-        <activity android:name=".About" android:label="@string/app_about_name"/>
+        <activity android:name=".ui.About" android:label="@string/app_about_name"/>
         
-        <receiver android:name=".SMSMorseReceiver" android:label="@string/app_receiver">
+        <receiver android:name=".transaction.EventReceiver" android:label="@string/app_receiver">
 			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 				<action android:name="com.jakewharton.smsmorse.VIBRATE_MORSE" />
