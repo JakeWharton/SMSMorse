@@ -19,7 +19,7 @@
 			android:title="@string/preference_vibrate_counts_title"
 			android:summary="@string/preference_vibrate_counts_summary"
 			android:defaultValue="false"/>
-		<com.jakewharton.smsmorse.BetterSeekBarPreference
+		<com.jakewharton.smsmorse.ui.BetterSeekBarPreference
 			android:key="@string/preference_dot_length"
 			android:title="@string/preference_dot_length_title"
 			android:summary="@string/preference_dot_length_summary"
