@@ -26,6 +26,9 @@
 	<string name="preference_vibrate_counts">vibrate_counts</string>
 	<string name="preference_vibrate_counts_title">Vibrate Number Counts</string>
 	<string name="preference_vibrate_counts_summary">Use counts to vibrate the sender number rather than Morse code representation.</string>
+	<string name="preference_lookup_contact_name">lookup_contact_name</string>
+	<string name="preference_lookup_contact_name_title">Lookup Contact Name</string>
+	<string name="preference_lookup_contact_name_summary">Use the contact name rather than just the number for "sender".</string>
 	<string name="preference_vibrate_parts">vibrate_parts</string>
 	<string name="preference_vibrate_parts_title">Vibrate Parts</string>
 	<string name="preference_vibrate_parts_summary">Currently:</string>
@@ -54,4 +57,19 @@
 	<string name="preference_input_enabled_summary">Enable ability to reply to SMS message by tapping Morse code.</string>
 	<string name="preference_error_char">error_char</string>
 	<string name="preference_error_allowed">error_allowed</string>
+	
+	<!--
+	 * Morse code binary lookup tree. Left for every dot, right for every dash
+	 * 
+	 *                                        #
+	 *                       E                                T
+	 *              I                 A               N               M
+	 *        S          U       R        W       D       K       G       O
+	 *    H       V    F   #   L    A   P   J   B   X   C   Y   Z   Q   #   #
+	 *  5   4   #   3 # # # 2 & #  + # # # # 1 6 = / # # # ( # 7 # # # 8 # 9 0
+	 * # # # # # #  ######?_####\"##.####@###'##-########;!#)#####,####:#######
+	 * #########$
+	 -->
+	<string name="morse_code_binary_lookup_tree">#ETIANMSURWDKGOHVF#LAPJBXCYZQ##54#3###2&amp;#+####16+/###(#7###8#90############?_####"##.####@###'##-########;!#)#####,####:################$</string>
+	<string name="morse_code_binary_lookup_tree_null_char">#</string>
 </resources>

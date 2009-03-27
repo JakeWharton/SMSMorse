@@ -65,6 +65,21 @@ containing a value of this type.
         /**  Menu Items 
          */
         public static final int menu_restore_defaults=0x7f060006;
+        /** 
+	 * Morse code binary lookup tree. Left for every dot, right for every dash
+	 * 
+	 *                                        #
+	 *                       E                                T
+	 *              I                 A               N               M
+	 *        S          U       R        W       D       K       G       O
+	 *    H       V    F   #   L    A   P   J   B   X   C   Y   Z   Q   #   #
+	 *  5   4   #   3 # # # 2 & #  + # # # # 1 6 = / # # # ( # 7 # # # 8 # 9 0
+	 * # # # # # #  ######?_####\"##.####@###'##-########;!#)#####,####:#######
+	 * #########$
+	 
+         */
+        public static final int morse_code_binary_lookup_tree=0x7f06002f;
+        public static final int morse_code_binary_lookup_tree_null_char=0x7f060030;
         public static final int preference_dot_length=0x7f06000e;
         public static final int preference_dot_length_summary=0x7f060010;
         public static final int preference_dot_length_title=0x7f06000f;
@@ -73,8 +88,8 @@ containing a value of this type.
         public static final int preference_enabled=0x7f06000b;
         public static final int preference_enabled_summary=0x7f06000d;
         public static final int preference_enabled_title=0x7f06000c;
-        public static final int preference_error_allowed=0x7f06002b;
-        public static final int preference_error_char=0x7f06002a;
+        public static final int preference_error_allowed=0x7f06002e;
+        public static final int preference_error_char=0x7f06002d;
         /**  Preference Headers 
          */
         public static final int preference_header_general=0x7f060008;
@@ -82,33 +97,36 @@ containing a value of this type.
         public static final int preference_header_rules=0x7f060009;
         /**  Input Preferences 
          */
-        public static final int preference_input_enabled=0x7f060027;
-        public static final int preference_input_enabled_summary=0x7f060029;
-        public static final int preference_input_enabled_title=0x7f060028;
+        public static final int preference_input_enabled=0x7f06002a;
+        public static final int preference_input_enabled_summary=0x7f06002c;
+        public static final int preference_input_enabled_title=0x7f06002b;
+        public static final int preference_lookup_contact_name=0x7f060014;
+        public static final int preference_lookup_contact_name_summary=0x7f060016;
+        public static final int preference_lookup_contact_name_title=0x7f060015;
         /**  Rules Preferences 
          */
-        public static final int preference_screen_off_only=0x7f06001b;
-        public static final int preference_screen_off_only_summary=0x7f06001d;
-        public static final int preference_screen_off_only_title=0x7f06001c;
-        public static final int preference_test=0x7f060018;
-        public static final int preference_test_summary=0x7f06001a;
-        public static final int preference_test_title=0x7f060019;
+        public static final int preference_screen_off_only=0x7f06001e;
+        public static final int preference_screen_off_only_summary=0x7f060020;
+        public static final int preference_screen_off_only_title=0x7f06001f;
+        public static final int preference_test=0x7f06001b;
+        public static final int preference_test_summary=0x7f06001d;
+        public static final int preference_test_title=0x7f06001c;
         public static final int preference_vibrate_counts=0x7f060011;
         public static final int preference_vibrate_counts_summary=0x7f060013;
         public static final int preference_vibrate_counts_title=0x7f060012;
-        public static final int preference_vibrate_normal=0x7f06001e;
-        public static final int preference_vibrate_normal_summary=0x7f060020;
-        public static final int preference_vibrate_normal_title=0x7f06001f;
-        public static final int preference_vibrate_parts=0x7f060014;
-        public static final int preference_vibrate_parts_dialog_title=0x7f060017;
-        public static final int preference_vibrate_parts_summary=0x7f060016;
-        public static final int preference_vibrate_parts_title=0x7f060015;
-        public static final int preference_vibrate_silent=0x7f060024;
-        public static final int preference_vibrate_silent_summary=0x7f060026;
-        public static final int preference_vibrate_silent_title=0x7f060025;
-        public static final int preference_vibrate_vibrate=0x7f060021;
-        public static final int preference_vibrate_vibrate_summary=0x7f060023;
-        public static final int preference_vibrate_vibrate_title=0x7f060022;
+        public static final int preference_vibrate_normal=0x7f060021;
+        public static final int preference_vibrate_normal_summary=0x7f060023;
+        public static final int preference_vibrate_normal_title=0x7f060022;
+        public static final int preference_vibrate_parts=0x7f060017;
+        public static final int preference_vibrate_parts_dialog_title=0x7f06001a;
+        public static final int preference_vibrate_parts_summary=0x7f060019;
+        public static final int preference_vibrate_parts_title=0x7f060018;
+        public static final int preference_vibrate_silent=0x7f060027;
+        public static final int preference_vibrate_silent_summary=0x7f060029;
+        public static final int preference_vibrate_silent_title=0x7f060028;
+        public static final int preference_vibrate_vibrate=0x7f060024;
+        public static final int preference_vibrate_vibrate_summary=0x7f060026;
+        public static final int preference_vibrate_vibrate_title=0x7f060025;
     }
     public static final class xml {
         public static final int preferences=0x7f040000;

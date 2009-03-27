@@ -3,17 +3,18 @@ package com.jakewharton.smsmorse.transaction;
 import java.util.ArrayList;
 
 import com.jakewharton.smsmorse.R;
-
 import android.app.KeyguardManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.provider.Contacts;
 import android.telephony.gsm.SmsMessage;
 import android.util.Log;
 
@@ -44,7 +45,7 @@ public class EventReceiver extends BroadcastReceiver {
 	private static final boolean DEFAULT_VIBRATE_SILENT  = false;
 	private static final long    DEFAULT_INITIAL_PAUSE   = 500L;
 	private static final String  DEFAULT_ERROR_CHAR      = "_";
-	private static final float   DEFAULT_ERROR_ALLOWED   = 0.2F;
+	private static final float   DEFAULT_PERCENT_ERROR   = 0.2F;
 	
 	//Morse code
 	private final static int DOTS_IN_DASH       = 3;
@@ -126,17 +127,6 @@ public class EventReceiver extends BroadcastReceiver {
 		{DOT, DOT, DOT, DOT, DOT, DOT, DOT, DOT, DOT} //9
 	};
 
-	//Binary lookup tree. Left for every dot, right for every dash
-	private final static String MORSE_BINARY_LOOKUP = 
-"                                       #                                "+
-"                      E                                T                "+
-"             I                 A               N               M        "+
-"       S          U       R        W       D       K       G       O    "+
-"   H       V    F   #   L    A   P   J   B   X   C   Y   Z   Q   #   #  "+
-" 5   4   #   3 # # # 2 & #  + # # # # 1 6 = / # # # ( # 7 # # # 8 # 9 0 "+
-"# # # # # #  ######?_####\"##.####@###'##-########;!#)#####,####:#######"+
-"#########$".replace(" ", "").replace("\n", "");
-	
 	//Instance variables
 	private SharedPreferences settings;
 	private Resources         resources;
@@ -154,9 +144,9 @@ public class EventReceiver extends BroadcastReceiver {
 		if (action.equals(VIBRATE_IN_MORSE)) {
 			vibrateMorse(convertToVibrations(extras.getString(VIBRATE_IN_MORSE_KEY)));
 		}
-		else if (action.equals(PARSE_MORSE)) {
+		/*else if (action.equals(PARSE_MORSE)) {
 			Log.i(TAG, "Parsed to: " + parseMorse(extras.getLongArray(PARSE_MORSE_KEY)));
-		}
+		}*/
 		else if (action.equals(SMS_RECEIVED)) {
 			final boolean smsValid      = extras != null;
 			final boolean enabled       = settings.getBoolean(resources.getString(R.string.preference_enabled), DEFAULT_ENABLED);
@@ -182,16 +172,28 @@ public class EventReceiver extends BroadcastReceiver {
 				final int vibrateParts = Integer.parseInt(settings.getString(resources.getString(R.string.preference_vibrate_parts), DEFAULT_VIBRATE_PARTS));
 				for (SmsMessage message : messages) {
 					if ((vibrateParts == VIBRATE_CONTENT_SENDER) || (vibrateParts == VIBRATE_CONTENT_SENDER_MESSAGE))
-						vibrations.addAll(convertToVibrations(message.getOriginatingAddress(), true));
+						vibrations.addAll(convertSenderToVibrations(context, message.getOriginatingAddress()));
 					if (vibrateParts != VIBRATE_CONTENT_SENDER)
 						vibrations.addAll(convertToVibrations(message.getMessageBody()));
 					if (vibrateParts == VIBRATE_CONTENT_MESSAGE_SENDER)
-						vibrations.addAll(convertToVibrations(message.getOriginatingAddress(), true));
+						vibrations.addAll(convertSenderToVibrations(context, message.getOriginatingAddress()));
 				}
 				
 				vibrateMorse(vibrations);
 			}
 		}
+	}
+	private ArrayList<Long> convertSenderToVibrations(Context context, String sender) {
+		if (settings.getBoolean(context.getString(R.string.preference_lookup_contact_name), true)) {
+			final String[] projection = new String[] { Contacts.PeopleColumns.DISPLAY_NAME };
+			final String selection = Contacts.Phones.NUMBER + " = " + sender;
+			final Cursor results = context.getContentResolver().query(Contacts.Phones.CONTENT_URI, projection, selection, null, Contacts.ContactMethods.PERSON_ID);
+			
+			if (results.moveToFirst()) {
+				return convertToVibrations(results.getString(results.getColumnIndex(Contacts.PeopleColumns.DISPLAY_NAME)));
+			}
+		}
+		return convertToVibrations(sender, true);
 	}
 	private void vibrateMorse(final ArrayList<Long> vibrationLongs) {
 		final long[] vibrations = new long[vibrationLongs.size()];
@@ -207,7 +209,7 @@ public class EventReceiver extends BroadcastReceiver {
 		vibrator.vibrate(vibrations, -1);
 		Log.i(TAG, morseVibrations.toString());
 	}
-	private String parseMorse(final long[] buttonPresses) {
+	/*private String parseMorse(final long[] buttonPresses) {
 		final char  errorChar    = settings.getString(resources.getString(R.string.preference_error_char), DEFAULT_ERROR_CHAR).charAt(0);
 		final float errorAllowed = settings.getFloat(resources.getString(R.string.preference_error_allowed), DEFAULT_ERROR_ALLOWED);
 		final float errorAllowedAbove = 1 + errorAllowed;
@@ -246,10 +248,10 @@ public class EventReceiver extends BroadcastReceiver {
 					pauses.add(pause);
 				}
 				else if ((pause >= pauseAverage * DOTS_IN_LETTER_GAP * errorAllowedBelow) && (pause <= pauseAverage * DOTS_IN_LETTER_GAP * errorAllowedAbove)) {
-					if ((lookupPointer >= MORSE_BINARY_LOOKUP.length()) || (MORSE_BINARY_LOOKUP.charAt(lookupPointer) == '#'))
+					if ((lookupPointer >= MORSE_BINARY_TREE.length()) || (MORSE_BINARY_TREE.charAt(lookupPointer) == MORSE_BINARY_NULL))
 						message.append(errorChar);
 					else
-						message.append(MORSE_BINARY_LOOKUP.charAt(lookupPointer));
+						message.append(MORSE_BINARY_TREE.charAt(lookupPointer));
 					
 					lookupPointer = 0;
 					pauses.add(pause / DOTS_IN_LETTER_GAP);
@@ -273,7 +275,7 @@ public class EventReceiver extends BroadcastReceiver {
 		for (Long number : numberList)
 			sum += (Long)number;
 		return (int)(sum / numberList.size());
-	}
+	}*/
     private ArrayList<Long> convertToVibrations(final String message) {
     	return convertToVibrations(message, false);
     }
