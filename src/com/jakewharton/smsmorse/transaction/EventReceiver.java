@@ -1,7 +1,6 @@
 package com.jakewharton.smsmorse.transaction;
 
 import java.util.ArrayList;
-
 import com.jakewharton.smsmorse.R;
 import android.app.KeyguardManager;
 import android.content.BroadcastReceiver;
@@ -44,21 +43,21 @@ public class EventReceiver extends BroadcastReceiver {
 	private static final boolean DEFAULT_VIBRATE_VIBRATE = true;
 	private static final boolean DEFAULT_VIBRATE_SILENT  = false;
 	private static final long    DEFAULT_INITIAL_PAUSE   = 500L;
-	private static final String  DEFAULT_ERROR_CHAR      = "_";
-	private static final float   DEFAULT_PERCENT_ERROR   = 0.2F;
+	//private static final String  DEFAULT_ERROR_CHAR      = "_";
+	//private static final float   DEFAULT_PERCENT_ERROR   = 0.2F;
 	
 	//Morse code
-	private final static int DOTS_IN_DASH       = 3;
-	private final static int DOTS_IN_GAP        = 1;
-	private final static int DOTS_IN_LETTER_GAP = 3;
-	private final static int DOTS_IN_WORD_GAP   = 7;
+	private static final int DOTS_IN_DASH       = 3;
+	private static final int DOTS_IN_GAP        = 1;
+	private static final int DOTS_IN_LETTER_GAP = 3;
+	private static final int DOTS_IN_WORD_GAP   = 7;
 	
 	//Character sets
-	private final static String      CHARSET_MORSE  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,?'!/()&:;=+-_\"$@";
-	private final static String      CHARSET_COUNTS = "0123456789";
-	private final static boolean     DOT  = true;
-	private final static boolean     DASH = false;
-	private final static boolean[][] MORSE  = {
+	private static final String      CHARSET_MORSE  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,?'!/()&:;=+-_\"$@";
+	private static final String      CHARSET_COUNTS = "0123456789";
+	private static final boolean     DOT  = true;
+	private static final boolean     DASH = false;
+	private static final boolean[][] MORSE  = {
         {DOT, DASH}, //A
         {DASH, DOT, DOT, DOT}, //B
         {DASH, DOT, DASH, DOT}, //C
@@ -114,7 +113,7 @@ public class EventReceiver extends BroadcastReceiver {
         {DOT, DOT, DOT, DASH, DOT, DOT, DASH}, //$
         {DOT, DASH, DASH, DOT, DASH, DOT} //@
 	};
-	private final static boolean[][] COUNTS = {
+	private static final boolean[][] COUNTS = {
 		{DASH}, //0
 		{DOT}, //1
 		{DOT, DOT}, //2
@@ -127,37 +126,40 @@ public class EventReceiver extends BroadcastReceiver {
 		{DOT, DOT, DOT, DOT, DOT, DOT, DOT, DOT, DOT} //9
 	};
 
-	//Instance variables
-	private SharedPreferences settings;
-	private Resources         resources;
-	private Vibrator          vibrator;
+	//Static variables
+	private SharedPreferences settings  = null;
+	private Resources         resources = null;
+	private Vibrator          vibrator  = null;
 	
+	/**
+	 * Called when an intent is received.
+	 */
 	public void onReceive(Context context, Intent intent) {
 		//Save context-specific objects needed in other methods
-		settings  = PreferenceManager.getDefaultSharedPreferences(context);
+		settings = PreferenceManager.getDefaultSharedPreferences(context);
 		resources = context.getResources();
-		vibrator  = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+		vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		
 		final String action = intent.getAction();
 		final Bundle extras = intent.getExtras();
 		
-		if (action.equals(VIBRATE_IN_MORSE)) {
-			vibrateMorse(convertToVibrations(extras.getString(VIBRATE_IN_MORSE_KEY)));
+		if (action.equals(EventReceiver.VIBRATE_IN_MORSE)) {
+			this.vibrateMorse(this.convertToVibrations(extras.getString(EventReceiver.VIBRATE_IN_MORSE_KEY)));
 		}
 		/*else if (action.equals(PARSE_MORSE)) {
-			Log.i(TAG, "Parsed to: " + parseMorse(extras.getLongArray(PARSE_MORSE_KEY)));
+			Log.i(EventReceiver.TAG, "Parsed to: " + EventReceiver.parseMorse(extras.getLongArray(PARSE_MORSE_KEY)));
 		}*/
-		else if (action.equals(SMS_RECEIVED)) {
+		else if (action.equals(EventReceiver.SMS_RECEIVED)) {
 			final boolean smsValid      = extras != null;
-			final boolean enabled       = settings.getBoolean(resources.getString(R.string.preference_enabled), DEFAULT_ENABLED);
+			final boolean enabled       = this.settings.getBoolean(this.resources.getString(R.string.preference_enabled), EventReceiver.DEFAULT_ENABLED);
 			final boolean keygaurdOn    = ((KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode();
-			final boolean screenOffOnly = settings.getBoolean(resources.getString(R.string.preference_screen_off_only), DEFAULT_SCREEN_OFF_ONLY);
+			final boolean screenOffOnly = this.settings.getBoolean(this.resources.getString(R.string.preference_screen_off_only), EventReceiver.DEFAULT_SCREEN_OFF_ONLY);
 			
 			final int audioMode = ((AudioManager)context.getSystemService(Context.AUDIO_SERVICE)).getRingerMode();
 			final boolean activeAudioMode = (
-				((audioMode == AudioManager.RINGER_MODE_NORMAL) && settings.getBoolean(resources.getString(R.string.preference_vibrate_normal), DEFAULT_VIBRATE_NORMAL)) ||
-				((audioMode == AudioManager.RINGER_MODE_VIBRATE) && settings.getBoolean(resources.getString(R.string.preference_vibrate_vibrate), DEFAULT_VIBRATE_VIBRATE)) ||
-				((audioMode == AudioManager.RINGER_MODE_SILENT) && settings.getBoolean(resources.getString(R.string.preference_vibrate_silent), DEFAULT_VIBRATE_SILENT))
+				((audioMode == AudioManager.RINGER_MODE_NORMAL) && this.settings.getBoolean(this.resources.getString(R.string.preference_vibrate_normal), EventReceiver.DEFAULT_VIBRATE_NORMAL)) ||
+				((audioMode == AudioManager.RINGER_MODE_VIBRATE) && this.settings.getBoolean(this.resources.getString(R.string.preference_vibrate_vibrate), EventReceiver.DEFAULT_VIBRATE_VIBRATE)) ||
+				((audioMode == AudioManager.RINGER_MODE_SILENT) && this.settings.getBoolean(this.resources.getString(R.string.preference_vibrate_silent), EventReceiver.DEFAULT_VIBRATE_SILENT))
 			);
 			
 			if (smsValid && enabled && activeAudioMode && (keygaurdOn || !screenOffOnly)) {
@@ -169,32 +171,47 @@ public class EventReceiver extends BroadcastReceiver {
 				
 				//Assemble 
 				final ArrayList<Long> vibrations = new ArrayList<Long>();
-				final int vibrateParts = Integer.parseInt(settings.getString(resources.getString(R.string.preference_vibrate_parts), DEFAULT_VIBRATE_PARTS));
+				final int vibrateParts = Integer.parseInt(settings.getString(resources.getString(R.string.preference_vibrate_parts), EventReceiver.DEFAULT_VIBRATE_PARTS));
 				for (SmsMessage message : messages) {
-					if ((vibrateParts == VIBRATE_CONTENT_SENDER) || (vibrateParts == VIBRATE_CONTENT_SENDER_MESSAGE))
-						vibrations.addAll(convertSenderToVibrations(context, message.getOriginatingAddress()));
-					if (vibrateParts != VIBRATE_CONTENT_SENDER)
-						vibrations.addAll(convertToVibrations(message.getMessageBody()));
-					if (vibrateParts == VIBRATE_CONTENT_MESSAGE_SENDER)
-						vibrations.addAll(convertSenderToVibrations(context, message.getOriginatingAddress()));
+					if ((vibrateParts == EventReceiver.VIBRATE_CONTENT_SENDER) || (vibrateParts == EventReceiver.VIBRATE_CONTENT_SENDER_MESSAGE))
+						vibrations.addAll(this.convertSenderToVibrations(context, message.getOriginatingAddress()));
+					if (vibrateParts != EventReceiver.VIBRATE_CONTENT_SENDER)
+						vibrations.addAll(this.convertToVibrations(message.getMessageBody()));
+					if (vibrateParts == EventReceiver.VIBRATE_CONTENT_MESSAGE_SENDER)
+						vibrations.addAll(this.convertSenderToVibrations(context, message.getOriginatingAddress()));
 				}
 				
-				vibrateMorse(vibrations);
+				this.vibrateMorse(vibrations);
 			}
 		}
 	}
+	
+	/**
+	 * Turns a converts the sender, either phone number of optionally the
+	 * contact name, into associated Morse code timings.
+	 * 
+	 * (Uses deprecated APIs to support pre-2.0 devices.)
+	 * @param context
+	 * @param sender
+	 * @return <pre>ArrayList</pre> of <pre>Long</pre>s of off/on vibration intervals
+	 */
 	private ArrayList<Long> convertSenderToVibrations(Context context, String sender) {
-		if (settings.getBoolean(context.getString(R.string.preference_lookup_contact_name), true)) {
+		if (this.settings.getBoolean(context.getString(R.string.preference_lookup_contact_name), true)) {
 			final String[] projection = new String[] { Contacts.PeopleColumns.DISPLAY_NAME };
 			final String selection = Contacts.Phones.NUMBER + " = " + sender;
 			final Cursor results = context.getContentResolver().query(Contacts.Phones.CONTENT_URI, projection, selection, null, Contacts.ContactMethods.PERSON_ID);
 			
 			if (results.moveToFirst()) {
-				return convertToVibrations(results.getString(results.getColumnIndex(Contacts.PeopleColumns.DISPLAY_NAME)));
+				return this.convertToVibrations(results.getString(results.getColumnIndex(Contacts.PeopleColumns.DISPLAY_NAME)));
 			}
 		}
-		return convertToVibrations(sender, true);
+		return this.convertToVibrations(sender, true);
 	}
+	
+	/**
+	 * Issues the vibrations contained within the <pre>vibrationLongs</pre> parameter.
+	 * @param vibrationLongs
+	 */
 	private void vibrateMorse(final ArrayList<Long> vibrationLongs) {
 		final long[] vibrations = new long[vibrationLongs.size()];
 		final StringBuffer morseVibrations = new StringBuffer("Vibrating Morse: ");
@@ -206,9 +223,10 @@ public class EventReceiver extends BroadcastReceiver {
 			morseVibrations.append(vibrationLongs.get(i));
 		}
 		
-		vibrator.vibrate(vibrations, -1);
-		Log.i(TAG, morseVibrations.toString());
+		this.vibrator.vibrate(vibrations, -1);
+		Log.i(EventReceiver.TAG, morseVibrations.toString());
 	}
+	
 	/*private String parseMorse(final long[] buttonPresses) {
 		final char  errorChar    = settings.getString(resources.getString(R.string.preference_error_char), DEFAULT_ERROR_CHAR).charAt(0);
 		final float errorAllowed = settings.getFloat(resources.getString(R.string.preference_error_allowed), DEFAULT_ERROR_ALLOWED);
@@ -276,26 +294,39 @@ public class EventReceiver extends BroadcastReceiver {
 			sum += (Long)number;
 		return (int)(sum / numberList.size());
 	}*/
-    private ArrayList<Long> convertToVibrations(final String message) {
-    	return convertToVibrations(message, false);
+    
+	/**
+     * Converts a string to associated Morse code timings.
+     * @param message Message to convert
+     * @return <pre>ArrayList</pre> of <pre>Long</pre>s of off/on vibration intervals
+     */
+	private ArrayList<Long> convertToVibrations(final String message) {
+    	return this.convertToVibrations(message, false);
     }
+	
+	/**
+	 * Converts a string to associated Morse code timings.
+	 * @param message Message to convert.
+	 * @param isNumber Boolean indicating whether or not the message is a phone number.
+	 * @return <pre>ArrayList</pre> of <pre>Long</pre>s of off/on vibration intervals
+	 */
 	private ArrayList<Long> convertToVibrations(final String message, final boolean isNumber) {
-    	final boolean vibrateCounts = settings.getBoolean(resources.getString(R.string.preference_vibrate_counts), DEFAULT_VIBRATE_COUNTS);
+    	final boolean vibrateCounts = this.settings.getBoolean(this.resources.getString(R.string.preference_vibrate_counts), EventReceiver.DEFAULT_VIBRATE_COUNTS);
     	
     	//Establish all lengths
-		final long dot       = settings.getInt(resources.getString(R.string.preference_dot_length), DEFAULT_DOT_LENGTH);
-		final long dash      = dot * DOTS_IN_DASH;
-		final long gap       = dot * DOTS_IN_GAP;
-		final long letterGap = dot * DOTS_IN_LETTER_GAP;
-		final long wordGap   = dot * DOTS_IN_WORD_GAP;
+		final long dot       = this.settings.getInt(this.resources.getString(R.string.preference_dot_length), EventReceiver.DEFAULT_DOT_LENGTH);
+		final long dash      = dot * EventReceiver.DOTS_IN_DASH;
+		final long gap       = dot * EventReceiver.DOTS_IN_GAP;
+		final long letterGap = dot * EventReceiver.DOTS_IN_LETTER_GAP;
+		final long wordGap   = dot * EventReceiver.DOTS_IN_WORD_GAP;
     	
     	final String[] words = message.toUpperCase().trim().split(" ");
     	final ArrayList<Long> vibrationObjects = new ArrayList<Long>();
-    	final String charset = isNumber && vibrateCounts ? CHARSET_COUNTS : CHARSET_MORSE;
-    	final boolean[][] lookups = isNumber && vibrateCounts ? COUNTS : MORSE;
+    	final String charset = isNumber && vibrateCounts ? EventReceiver.CHARSET_COUNTS : EventReceiver.CHARSET_MORSE;
+    	final boolean[][] lookups = isNumber && vibrateCounts ? EventReceiver.COUNTS : EventReceiver.MORSE;
     	
     	//Add initial pause
-    	vibrationObjects.add(DEFAULT_INITIAL_PAUSE);
+    	vibrationObjects.add(EventReceiver.DEFAULT_INITIAL_PAUSE);
     	
     	String word;
     	boolean[] letterBooleans;

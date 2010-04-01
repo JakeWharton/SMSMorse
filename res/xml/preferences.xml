@@ -66,4 +66,12 @@
 			android:summary="@string/preference_input_enabled_summary"
 			android:defaultValue="true"/>
 	</PreferenceCategory>-->
+	<PreferenceCategory android:title="@string/preference_header_other">
+		<com.jakewharton.smsmorse.ui.DialogPreference
+			android:key="@string/preference_about"
+			android:dialogIcon="@drawable/icon"
+			android:title="@string/preference_about_title"
+			android:dialogTitle="@string/app_name"
+			android:negativeButtonText="@null"/>
+	</PreferenceCategory>
 </PreferenceScreen>

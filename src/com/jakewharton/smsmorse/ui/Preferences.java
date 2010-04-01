@@ -4,6 +4,7 @@ import com.jakewharton.smsmorse.R;
 import com.jakewharton.smsmorse.transaction.EventReceiver;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -18,7 +19,6 @@ import android.view.MenuItem;
 
 public class Preferences extends PreferenceActivity {
 	private static final int MENU_RESTORE_DEFAULTS = 0;
-	private static final int MENU_ABOUT            = 1;
 	
 	private CheckBoxPreference      mCheckBoxEnabled;
 	private ListPreference          mVibratePart;
@@ -103,13 +103,19 @@ public class Preferences extends PreferenceActivity {
 		
 		//mCheckBoxInputEnabled = (CheckBoxPreference)screen.findPreference(getString(R.string.preference_input_enabled));
 		//mCheckBoxInputEnabled.setOnPreferenceChangeListener(mInputEnabledListener);
+		
+		final DialogPreference about = (DialogPreference)screen.findPreference(getString(R.string.preference_about));
+		about.setDialogLayoutResource(R.layout.about);
+		try {
+			final String version = getPackageManager().getPackageInfo("com.jakewharton.smsmorse", PackageManager.GET_META_DATA).versionName;
+			about.setDialogTitle(getString(R.string.app_name) + " v" + version);
+		} catch (Exception e) {}
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.clear();
 		menu.add(0, MENU_RESTORE_DEFAULTS, 0, R.string.menu_restore_defaults);
-		menu.add(0, MENU_ABOUT, 0, R.string.menu_about);
 		return true;
 	}
 	@Override
@@ -119,10 +125,6 @@ public class Preferences extends PreferenceActivity {
 				PreferenceManager.getDefaultSharedPreferences(this).edit().clear().commit();
 				setPreferenceScreen(null);
 				loadPreferences();
-				return true;
-				
-			case MENU_ABOUT:
-				startActivity(new Intent(this, About.class));
 				return true;
 		}
 		return false;

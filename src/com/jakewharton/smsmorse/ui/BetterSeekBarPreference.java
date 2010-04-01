@@ -26,7 +26,6 @@ public class BetterSeekBarPreference extends DialogPreference {
     private TextView mTextView;
 
 	private OnSeekBarChangeListener changeListener = new OnSeekBarChangeListener() {
-
 		public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
 			setTextValue(arg1);
 		}

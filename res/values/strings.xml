@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">SMSMorse</string>
-	<string name="app_about_name">About SMSMorse</string>
-	<string name="app_version">v1.1.0</string>
-	<string name="app_by">by Jake Wharton</string>
-	<string name="app_about"><a href="http://jakewharton.com">View Website</a>\n\n<a href="http://twitter.com/JakeWharton">Follow on Twitter</a>\n\n<a href="http://cyrket.com/search?q=com.jakewharton">View Other Android Applications</a></string>
 	<string name="app_receiver">EventReceiver</string>
+	<string name="app_about">Developed by Jake Wharton &lt;jakewharton@gmail.com&gt;\n\nWebsite:\nhttp://jakewharton.com\n\nGitHub Project:\nhttp://github.com/JakeWharton/smsmorse\n\nFollow on Twitter:\nhttp://twitter.com/JakeWharton</string>
 	
 	<!-- Menu Items -->
 	<string name="menu_restore_defaults">Restore Defaults</string>
 	<string name="menu_about">About</string>
 	
 	<!-- Preference Headers -->
-	<string name="preference_header_general">SMSMorse General Settings</string>
-	<string name="preference_header_rules">SMSMorse Rule Settings</string>
-	<string name="preference_header_input">SMSMorse Input Settings</string>
+	<string name="preference_header_general">General Settings</string>
+	<string name="preference_header_rules">Rule Settings</string>
+	<string name="preference_header_input">Input Settings</string>
+	<string name="preference_header_other">Other</string>
 	
 	<!-- General Preferences -->
 	<string name="preference_enabled">enabled</string>
@@ -57,6 +55,12 @@
 	<string name="preference_input_enabled_summary">Enable ability to reply to SMS message by tapping Morse code.</string>
 	<string name="preference_error_char">error_char</string>
 	<string name="preference_error_allowed">error_allowed</string>
+	
+	<!-- Other Preferences -->
+	<string name="preference_about">about</string>
+	<string name="preference_about_title">About SMSMorse</string>
+	<string name="preference_other">other</string>
+	<string name="preference_other_title">View Other Apps</string>
 	
 	<!--
 	 * Morse code binary lookup tree. Left for every dot, right for every dash
